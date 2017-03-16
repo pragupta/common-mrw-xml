@@ -48,6 +48,7 @@
     <attribute><id>ORDINAL_ID</id></attribute>
     <attribute><id>FAPI_POS</id></attribute>
     <attribute><id>FAPI_NAME</id></attribute>
+    <attribute><id>PNOR_FLASH_WORKAROUNDS</id></attribute>
 </targetType>
 
 <targetType>
@@ -94,6 +95,12 @@
     <attribute>
         <id>FRU_ID</id>
     </attribute>
+    <attribute>
+        <id>HDAT_EC</id>
+    </attribute>
+    <attribute>
+        <id>MINI_EC</id>
+    </attribute>
 </targetType>
 
 <targetType>
@@ -125,7 +132,9 @@
     </attribute>
     <attribute><id>FABRIC_NODE_ID</id></attribute><!-- DEPRECATED -->
     <attribute><id>FABRIC_GROUP_ID</id></attribute>
+    <attribute><id>PROC_EFF_FABRIC_GROUP_ID</id></attribute>
     <attribute><id>FABRIC_CHIP_ID</id></attribute>
+    <attribute><id>PROC_EFF_FABRIC_CHIP_ID</id></attribute>
     <attribute>
         <!-- Processor chips have an SBE -->
         <id>CHIP_HAS_SBE</id>
@@ -237,13 +246,15 @@
     <attribute><id>PM_SPIVID_MAJORITY_VOTE_ENABLE</id></attribute>
     <attribute><id>PM_SPIVID_MAX_RETRIES</id></attribute>
     <attribute><id>PROC_DPLL_DIVIDER</id></attribute>
-     <!-- End pm_hwp_attributes.xml -->
-     <!-- Begin poreve_memory_attributes.xml -->
-     <attribute><id>SBE_SEEPROM_I2C_ADDRESS_BYTES</id></attribute>
-     <attribute><id>SBE_SEEPROM_I2C_DEVICE_ADDRESS</id></attribute>
-     <attribute><id>SBE_SEEPROM_I2C_PORT</id></attribute>
-     <attribute><id>PNOR_I2C_ADDRESS_BYTES</id></attribute>
-     <!-- End Supporting poreve_memory_attributes.xml -->
+    <!-- End pm_hwp_attributes.xml -->
+    <attribute><id>SKIP_HW_VREF_CAL</id></attribute>
+    <attribute><id>SKIP_RD_VREF_VREFSENSE_OVERRIDE</id></attribute>
+    <!-- Begin poreve_memory_attributes.xml -->
+    <attribute><id>SBE_SEEPROM_I2C_ADDRESS_BYTES</id></attribute>
+    <attribute><id>SBE_SEEPROM_I2C_DEVICE_ADDRESS</id></attribute>
+    <attribute><id>SBE_SEEPROM_I2C_PORT</id></attribute>
+    <attribute><id>PNOR_I2C_ADDRESS_BYTES</id></attribute>
+    <!-- End Supporting poreve_memory_attributes.xml -->
 <!-- TODO RTC 82688. This next attribute moves to hostboot only
      with this story  -->
     <attribute><id>PROC_SECURITY_SETUP_VECTOR</id></attribute>
@@ -316,6 +327,8 @@
     <attribute><id>PROC_FABRIC_A_AGGREGATE</id></attribute>
     <attribute><id>PROC_FABRIC_X_AGGREGATE</id></attribute>
     <attribute><id>XIVE_HW_RESET</id></attribute>
+    <attribute><id>DISABLE_I2C_ENGINE2_PORT0_DIAG_MODE</id></attribute>
+    <attribute><id>NDL_MESHCTRL_SETUP</id></attribute>
 </targetType>
 
 <targetType>
@@ -484,6 +497,7 @@
     </attribute>
 
     <attribute><id>EEPROM_VPD_PRIMARY_INFO</id></attribute>
+    <attribute><id>TEMP_SENSOR_I2C_CONFIG</id></attribute>
 
     <attribute><id>VPD_REC_NUM</id></attribute>
     <attribute><id>MSS_EFF_VPD_VERSION</id></attribute>
@@ -593,10 +607,11 @@
     <attribute><id>ISTEP_PAUSE_CONFIG</id></attribute>
     <attribute><id>FRU_ID</id></attribute>
     <attribute><id>BMC_FRU_ID</id></attribute>
-    <attribute><id>MRW_NEST_CAPABLE_FREQUENCIES_SYS</id></attribute>
     <attribute><id>PROC_REFCLOCK_RCVR_TERM</id></attribute>
     <attribute><id>PCI_REFCLOCK_RCVR_TERM</id></attribute>
+    <attribute><id>DD1_SLOW_PCI_REF_CLOCK</id></attribute>
     <attribute><id>MIN_FREQ_MHZ</id></attribute>
+    <attribute><id>DPO_MIN_FREQ_PERCENT</id></attribute>
     <attribute><id>FREQ_PROC_REFCLOCK</id></attribute>
     <attribute><id>FREQ_PROC_REFCLOCK_KHZ</id></attribute>
     <attribute><id>FREQ_MEM_REFCLOCK</id></attribute>
@@ -612,7 +627,6 @@
     <attribute><id>MSS_MBA_CACHELINE_INTERLEAVE_MODE</id></attribute>
     <attribute><id>PROC_EPS_TABLE_TYPE</id></attribute>
     <attribute><id>PROC_FABRIC_PUMP_MODE</id></attribute>
-    <attribute><id>PROC_X_BUS_WIDTH</id></attribute>
     <attribute><id>X_EREPAIR_THRESHOLD_FIELD</id></attribute>
     <attribute><id>A_EREPAIR_THRESHOLD_FIELD</id></attribute>
     <attribute><id>DMI_EREPAIR_THRESHOLD_FIELD</id></attribute>
@@ -670,6 +684,8 @@
     <attribute><id>MNFG_TH_CEN_MBA_IPL_SOFT_CE_TH_ALGO</id></attribute>
     <attribute><id>MNFG_TH_CEN_MBA_RT_RCE_PER_RANK</id></attribute>
     <attribute><id>MNFG_TH_CEN_L4_CACHE_CES</id></attribute>
+    <attribute><id>MNFG_TH_RCD_PARITY_ERRORS</id></attribute>
+    <attribute><id>MNFG_TH_MEMORY_IUES</id></attribute>
     <attribute><id>OPT_MEMMAP_GROUP_POLICY</id></attribute>
     <attribute><id>BRAZOS_RX_FIFO_OVERRIDE</id></attribute>
     <attribute><id>MRW_MBA_CACHELINE_INTERLEAVE_MODE_CONTROL</id></attribute>
@@ -732,6 +748,7 @@
     <attribute><id>PROC_FABRIC_CAPI_MODE</id></attribute>
     <attribute><id>PROC_FABRIC_ADDR_BAR_MODE</id></attribute>
     <!-- HDAT Hostboot Runtime Data Info -->
+    <attribute><id>HDAT_RSV_MEM_NUM_SECTIONS</id></attribute>
     <attribute><id>HDAT_HBRT_NUM_SECTIONS</id></attribute>
     <attribute><id>HDAT_HBRT_SECTION_SIZE</id></attribute>
     <attribute><id>PIB_I2C_REFCLOCK</id></attribute>
@@ -764,8 +781,12 @@
     <attribute><id>MRW_HW_MIRRORING_ENABLE</id></attribute>
 
     <!-- attributes for sbe_start -->
+    <attribute><id>SBE_UPDATE_DISABLE</id></attribute>
     <attribute><id>BOOT_FLAGS</id></attribute>
     <attribute><id>NEST_PLL_BUCKET</id></attribute>
+    <attribute><id>NEST_PLL_FREQ_BUCKETS</id></attribute>
+    <attribute><id>NEST_PLL_FREQ_LIST</id></attribute>
+    <attribute><id>NEST_PLL_FREQ_I2CDIV_LIST</id></attribute>
     <attribute><id>RISK_LEVEL</id></attribute>
     <attribute><id>SYS_FORCE_ALL_CORES</id></attribute>
     <attribute><id>DISABLE_HBBL_VECTORS</id></attribute>
@@ -860,11 +881,13 @@
     <attribute><id>DPLL_VDM_RESPONSE</id></attribute>
     <attribute><id>MSS_VMEM_REGULATOR_MAX_DIMM_COUNT</id></attribute>
     <attribute><id>SYSTEM_WOF_ENABLED</id></attribute>
+    <attribute><id>WOF_POWER_LIMIT</id></attribute>
     <attribute><id>AVSBUS_FREQUENCY</id></attribute>
     <attribute><id>PROC_FABRIC_ASYNC_SAFE_MODE</id></attribute>
     <attribute><id>VDM_ENABLE</id></attribute>
     <attribute><id>STOP8_DISABLE</id></attribute>
     <attribute><id>STOP4_DISABLE</id></attribute>
+    <attribute><id>STOP5_DISABLE</id></attribute>
     <attribute><id>SUPPORTED_STOP_STATES</id></attribute>
     <attribute><id>SYSTEM_FAMILY</id></attribute>
     <attribute><id>SYSTEM_TYPE</id></attribute>
@@ -883,10 +906,14 @@
     <attribute><id>IVRM_STABILIZATION_DELAY_NS</id></attribute>
     <attribute><id>SYSTEM_RESCLK_ENABLE</id></attribute>
     <attribute><id>MSS_MRW_REFRESH_RATE_REQUEST</id></attribute>
+    <attribute><id>MSS_MRW_TEMP_REFRESH_MODE</id></attribute>
     <attribute><id>MSS_VCCD_OVERRIDE</id></attribute>
     <attribute><id>RAW_MTM</id></attribute>
     <attribute><id>MSS_MEM_PORT_POS_OF_FAIL_THROTTLE</id></attribute>
     <attribute><id>SYSTEM_RING_DBG_MODE</id></attribute>
+    <attribute><id>NEST_LEAKAGE_PERCENT</id></attribute>
+    <attribute><id>MSS_MRW_DRAM_WRITE_CRC</id></attribute>
+    <attribute><id>PGPE_HCODE_FUNCTION_ENABLE</id></attribute>
 </targetType>
 
 <!-- enc-node-power9 -->
@@ -921,6 +948,7 @@
     <attribute><id>MSS_VOLT_DDR4_VDDR_SLOPE_EFF_CONFIG</id></attribute>
     <attribute><id>MSS_VOLT_DDR4_VDDR_INTERCEPT_EFF_CONFIG</id></attribute>
     <attribute><id>MRW_DDR4_VDDR_MAX_LIMIT_EFF_CONFIG</id></attribute>
+    <attribute><id>HDAT_RSV_MEM_NUM_SECTIONS</id></attribute>
     <attribute><id>HDAT_HBRT_NUM_SECTIONS</id></attribute>
     <attribute><id>HDAT_HBRT_SECTION_SIZE</id></attribute>
     <attribute><id>VPD_REC_NUM</id></attribute>
@@ -1126,6 +1154,7 @@
     <attribute><id>IO_FILTER_BYPASS</id></attribute>
     <attribute><id>DUMP_STOP_INFO_SUPPRESS_ERROR_TRACE</id></attribute>
     <attribute><id>DUMP_STOP_INFO_ENABLE_ERRORLOG</id></attribute>
+    <attribute><id>SBE_IS_STARTED</id></attribute>
 
     <!-- Processor characteristics for HDAT -->
     <attribute>
@@ -1276,11 +1305,13 @@
     <attribute><id>TOD_CPU_DATA</id></attribute>
     <attribute><id>PM_SPWUP_IGNORE_XSTOP_FLAG</id></attribute>
     <attribute><id>SECUREBOOT_PROTECT_DECONFIGURED_TPM</id></attribute>
+    <attribute><id>CME_INSTRUCTION_TRACE_ENABLE</id></attribute>
     <!-- START memory workaround for DD1.02 -->
     <attribute><id>DO_MSS_WR_VREF</id></attribute>
     <attribute><id>DO_MSS_VREF_DAC</id></attribute>
     <attribute><id>DO_MSS_TRAINING_BAD_BITS</id></attribute>
     <!-- END memory workaround for DD1.02 -->
+    <attribute><id>DO_BLUE_WATERFALL_ADJUST</id></attribute>
 
 </targetType><!-- chip-processor-power9 -->
 
@@ -1392,6 +1423,7 @@
     <attribute><id>HWAS_STATE_CHANGED_SUBSCRIPTION_MASK</id>
         <default>0x00000003</default> <!-- GARD | MEMDIAG -->
     </attribute>
+    <attribute><id>EEPROM_VPD_PRIMARY_INFO</id></attribute>
     <attribute><id>IBSCOM_MCS_BASE_ADDR</id></attribute>
     <attribute><id>EI_BUS_TX_MSBSWAP</id></attribute>
     <attribute><id>SCRATCH_UINT8_1</id><default>5</default></attribute>
@@ -1429,12 +1461,24 @@
     <attribute><id>EFF_DIMM_DDR4_RC06_07</id></attribute>
     <attribute><id>EFF_DIMM_DDR4_RC08</id></attribute>
     <attribute><id>EFF_DIMM_DDR4_RC09</id></attribute>
+    <!--HWSV needs to update names so we can remove this-->
     <attribute><id>EFF_DIMM_DDR4_RC10</id></attribute>
+    <!--HWSV needs to update names so we can remove this-->
     <attribute><id>EFF_DIMM_DDR4_RC11</id></attribute>
+    <!--HWSV needs to update names so we can remove this-->
     <attribute><id>EFF_DIMM_DDR4_RC12</id></attribute>
+    <!--HWSV needs to update names so we can remove this-->
     <attribute><id>EFF_DIMM_DDR4_RC13</id></attribute>
+    <!--HWSV needs to update names so we can remove this-->
     <attribute><id>EFF_DIMM_DDR4_RC14</id></attribute>
+    <!--HWSV needs to update names so we can remove this-->
     <attribute><id>EFF_DIMM_DDR4_RC15</id></attribute>
+    <attribute><id>EFF_DIMM_DDR4_RC0A</id></attribute>
+    <attribute><id>EFF_DIMM_DDR4_RC0B</id></attribute>
+    <attribute><id>EFF_DIMM_DDR4_RC0C</id></attribute>
+    <attribute><id>EFF_DIMM_DDR4_RC0D</id></attribute>
+    <attribute><id>EFF_DIMM_DDR4_RC0E</id></attribute>
+    <attribute><id>EFF_DIMM_DDR4_RC0F</id></attribute>
     <attribute><id>EFF_DIMM_DDR4_RC_1x</id></attribute>
     <attribute><id>EFF_DIMM_DDR4_RC_2x</id></attribute>
     <attribute><id>EFF_DIMM_DDR4_RC_3x</id></attribute>
@@ -1816,6 +1860,7 @@
     <attribute><id>EFF_DRAM_RTT_NOM</id></attribute>
     <attribute><id>EFF_DRAM_RTT_WR</id></attribute>
     <attribute><id>EFF_DRAM_RTT_PARK</id></attribute>
+    <attribute><id>EFF_RANK_GROUP_OVERRIDE</id></attribute>
     <attribute><id>MSS_VREF_DAC_NIBBLE</id></attribute>
     <attribute><id>MSS_MVPD_FWMS</id></attribute>
 </targetType>
@@ -1905,6 +1950,7 @@
     <attribute><id>VDD_ID</id></attribute>
     <attribute><id>AVDD_ID</id></attribute>
 
+    <attribute><id>MSS_REORDER_QUEUE_SETTING</id></attribute>
 </targetType>
 
 <targetType>
@@ -1982,19 +2028,24 @@
     <attribute><id>PROC_PCIE_PCS_RX_PK_INIT</id></attribute>
     <attribute><id>PROC_PCIE_PCS_RX_INIT_GAIN</id></attribute>
     <attribute><id>PROC_PCIE_PCS_RX_SIGDET_LVL</id></attribute>
-    <attribute><id>PROC_PCIE_PCS_RX_ROT_CDR_LOOKAHEAD</id></attribute>
-    <attribute><id>PROC_PCIE_PCS_RX_ROT_CDR_SSC</id></attribute>
     <attribute><id>PROC_PCIE_PCS_RX_ROT_EXTEL</id></attribute>
     <attribute><id>PROC_PCIE_PCS_RX_ROT_RST_FW</id></attribute>
+    <attribute><id>PROC_PCIE_PCS_RX_DFE_FDDC</id></attribute>
+    <attribute><id>PROC_PCIE_PCS_RX_LOFF_CONTROL</id></attribute>
+    <attribute><id>PROC_PCIE_PCS_RX_VGA_CONTRL_REGISTER3</id></attribute>
+    <attribute><id>PROC_PCIE_PCS_RX_ROT_CDR_LOOKAHEAD</id></attribute>
+    <attribute><id>PROC_PCIE_PCS_RX_ROT_CDR_SSC</id></attribute>
     <attribute><id>PROC_PCIE_PCS_PCLCK_CNTL_PLLA</id></attribute>
     <attribute><id>PROC_PCIE_PCS_PCLCK_CNTL_PLLB</id></attribute>
     <attribute><id>PROC_PCIE_PCS_TX_DCLCK_ROT</id></attribute>
+    <attribute><id>PROC_PCIE_PCS_TX_FIFO_CONFIG_OFFSET</id></attribute>
     <attribute><id>PROC_PCIE_PCS_TX_PCIE_RECV_DETECT_CNTL_REG1</id></attribute>
     <attribute><id>PROC_PCIE_PCS_TX_PCIE_RECV_DETECT_CNTL_REG2</id></attribute>
     <attribute><id>PROC_PCIE_PCS_TX_POWER_SEQ_ENABLE</id></attribute>
+    <attribute><id>PROC_PCIE_PCS_RX_PHASE_ROTATOR_CNTL</id></attribute>
     <attribute><id>PROC_PCIE_PCS_RX_VGA_CNTL_REG1</id></attribute>
     <attribute><id>PROC_PCIE_PCS_RX_VGA_CNTL_REG2</id></attribute>
-    <attribute><id>PROC_PCIE_PCS_RX_DFE_FDDC</id></attribute>
+    <attribute><id>PROC_PCIE_PCS_RX_SIGDET_CNTL</id></attribute>
     <attribute><id>PROC_PCIE_PCS_SYSTEM_CNTL</id></attribute>
     <attribute><id>PROC_PCIE_PCS_M_CNTL</id></attribute>
     <attribute><id>PROC_PCIE_IOP_SWAP</id></attribute>
@@ -2120,6 +2171,9 @@
     <attribute><id>CDM_DOMAIN</id><default>FABRIC</default></attribute>
     <attribute><id>SCRATCH_UINT8_1</id><default>5</default></attribute>
     <attribute><id>PARENT_PERVASIVE</id></attribute>
+    <attribute><id>HWAS_STATE_CHANGED_SUBSCRIPTION_MASK</id>
+        <default>0x00000001</default> <!-- GARD -->
+    </attribute>
 </targetType>
 
 <targetType>
@@ -2230,6 +2284,8 @@
     <attribute><id>PARENT_PERVASIVE</id></attribute>
     <attribute><id>IO_XBUS_DCCAL_FLAGS</id></attribute>
     <attribute><id>IO_X_DEBUG</id></attribute>
+    <attribute><id>IO_X_MFG_CHK</id></attribute>
+    <attribute><id>IO_X_MFG_MIN_EYE_WIDTH</id></attribute>
     <attribute><id>IO_XBUS_MASTER_MODE</id></attribute>
     <attribute><id>IO_XBUS_TX_MARGIN_RATIO</id></attribute>
     <attribute><id>IO_XBUS_TX_FFE_PRECURSOR</id></attribute>
