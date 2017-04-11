@@ -863,6 +863,7 @@ ID for the sensor number returned with the elog. -->
       <macro>DIRECT</macro>
     </hwpfToHbAttrMap>
   </attribute>
+  <!-- TPM Attributes -->
   <enumerationType>
     <id>CHIP_VER</id>
     <description>Enumeration indicating the chip version</description>
@@ -1452,14 +1453,26 @@ ID for the sensor number returned with the elog. -->
       <name>FANCTLR</name>
       <value>65</value>
     </enumerator>
-    <!-- add any new types here, and increment TEST_FAIL and LAST_IN_RANGE -->
     <enumerator>
-      <name>TEST_FAIL</name>
+      <name>OBUS_BRICK</name>
       <value>66</value>
     </enumerator>
     <enumerator>
-      <name>LAST_IN_RANGE</name>
+      <name>CAPILINK</name>
       <value>67</value>
+    </enumerator>
+    <enumerator>
+      <name>NPU</name>
+      <value>68</value>
+    </enumerator>
+    <!-- add any new types here, and increment TEST_FAIL and LAST_IN_RANGE -->
+    <enumerator>
+      <name>TEST_FAIL</name>
+      <value>69</value>
+    </enumerator>
+    <enumerator>
+      <name>LAST_IN_RANGE</name>
+      <value>70</value>
     </enumerator>
     <default>NA</default>
   </enumerationType>
@@ -2151,6 +2164,24 @@ ID for the sensor number returned with the elog. -->
     <enumerator>
       <name>4_BYTE</name>
       <value>2</value>
+    </enumerator>
+  </enumerationType>
+  <enumerationType>
+    <id>OPTICS_CONFIG_MODE</id>
+    <description>
+        Enumeration indicating the OPTICS_CONFIG_MODE
+    </description>
+    <enumerator>
+      <name>SMP</name>
+      <value>0x0</value>
+    </enumerator>
+    <enumerator>
+      <name>CAPILINK</name>
+      <value>0x1</value>
+    </enumerator>
+    <enumerator>
+      <name>NVLINK</name>
+      <value>0x2</value>
     </enumerator>
   </enumerationType>
   <enumerationType>
@@ -3129,12 +3160,28 @@ ID for the sensor number returned with the elog. -->
         <default>0xAE</default>
       </field>
       <field>
+        <name>devAddrLocality1</name>
+        <description>Device address on the I2C bus for Locality 1.
+                         This is a 7-bit value, but then shifted 1
+                         bit left.</description>
+        <type>uint8_t</type>
+        <default>0xA8</default>
+      </field>
+      <field>
         <name>devAddrLocality2</name>
         <description>Device address on the I2C bus for Locality 2.
                          This is a 7-bit value, but then shifted 1
                          bit left.</description>
         <type>uint8_t</type>
         <default>0xAA</default>
+      </field>
+      <field>
+        <name>devAddrLocality3</name>
+        <description>Device address on the I2C bus for Locality 3.
+                         This is a 7-bit value, but then shifted 1
+                         bit left.</description>
+        <type>uint8_t</type>
+        <default>0xA4</default>
       </field>
       <field>
         <name>devAddrLocality4</name>
@@ -9036,7 +9083,6 @@ Selects which voltage level to place the Core and ECO domain PFETs upon Winkle e
   </attribute>
   <attribute>
     <id>OPTICS_CONFIG_MODE</id>
-    <!-- <targetType>TARGET_TYPE_OBUS</targetType> -->
     <description>
     Per-link optics configuration
     0 = SMP (default)
@@ -9052,6 +9098,26 @@ Selects which voltage level to place the Core and ECO domain PFETs upon Winkle e
     <readable/>
     <hwpfToHbAttrMap>
       <id>ATTR_OPTICS_CONFIG_MODE</id>
+      <macro>DIRECT</macro>
+    </hwpfToHbAttrMap>
+  </attribute>
+  <attribute>
+    <id>OBUS_BRICK_LANE_MASK</id>
+    <description>
+      Lane mask for which 8 lanes belong to this brick
+      This is a right justified 24-bit value. Only 8 of the
+      24 bits will be set representing the lanes belonging to
+      the associated brick.
+      Provided by the MRW.
+  </description>
+    <simpleType>
+      <uint32_t>
+    </uint32_t>
+    </simpleType>
+    <persistency>non-volatile</persistency>
+    <readable/>
+    <hwpfToHbAttrMap>
+      <id>ATTR_OBUS_BRICK_LANE_MASK</id>
       <macro>DIRECT</macro>
     </hwpfToHbAttrMap>
   </attribute>
