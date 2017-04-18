@@ -2473,6 +2473,13 @@
 		</attribute>
 	</targetType>
 	<targetType>
+		<id>OBUS_BRICK</id>
+		<attribute>
+			<id>CLASS</id>
+			<default>BUS</default>
+		</attribute>
+	</targetType>
+	<targetType>
 		<id>ETHERNET</id>
 		<attribute>
 			<id>CLASS</id>
