@@ -1605,7 +1605,12 @@ Selects which voltage level to place the Core and ECO domain PFETs upon Winkle e
       proper VFRT tables.
       Producer: TMGT
       Consumers: FW that selects VFRT tables
-    </description><simpleType><uint8_t><default>0</default></uint8_t></simpleType><persistency>non-volatile</persistency><readable/><writeable/></attribute><attribute><id>SYS_VFRT_STATIC_DATA_ENABLE</id><description>
+    </description><simpleType><uint8_t><default>0</default></uint8_t></simpleType><hwpfToHbAttrMap><id>ATTR_WOF_POWER_LIMIT</id><macro>DIRECT</macro></hwpfToHbAttrMap><persistency>non-volatile</persistency><readable/><writeable/></attribute><attribute><id>WOF_TABLE_LID_NUMBER</id><description>
+      LID id used to load tables for Workload Optimized
+      Frequency (WOF) algorithms.
+      Producer: TMGT
+      Consumers: FW that selects VFRT tables
+    </description><simpleType><uint32_t><!-- @todo-RTC:172776-Get rid of default value that points to ZZ --><default>0x81E00440</default></uint32_t></simpleType><persistency>non-volatile</persistency><readable/><writeable/></attribute><attribute><id>SYS_VFRT_STATIC_DATA_ENABLE</id><description>
      Enables pstate parameter block code to use the static system vfrt data
      Consumer: p9_pstate_parameter_block.C
      0 = OFF, 1 = ON
@@ -1615,7 +1620,7 @@ Selects which voltage level to place the Core and ECO domain PFETs upon Winkle e
          the opposite setting.  However, coordination needs to occur with all CIs
          as this will enable functions that may not be modeled across the board.
      -->
-     </description><simpleType><uint8_t/></simpleType><persistency>non-volatile</persistency><readable/><hwpfToHbAttrMap><id>ATTR_SYS_VFRT_STATIC_DATA_ENABLE</id><macro>DIRECT</macro></hwpfToHbAttrMap></attribute><attribute><id>SYSTEM_RESCLK_STEP_DELAY</id><description>
+     </description><simpleType><uint8_t><default>0</default></uint8_t></simpleType><persistency>non-volatile</persistency><readable/><hwpfToHbAttrMap><id>ATTR_SYS_VFRT_STATIC_DATA_ENABLE</id><macro>DIRECT</macro></hwpfToHbAttrMap></attribute><attribute><id>SYSTEM_RESCLK_STEP_DELAY</id><description>
       Minimum delay (in nanoseconds) between resonant clock transition steps
 
       Producer: MRWB
@@ -2089,10 +2094,7 @@ Selects which voltage level to place the Core and ECO domain PFETs upon Winkle e
       Value of on or off.
       Determines if the cleaner of the L4 cache (write modified entries to memory on idle cycles)
       enabled or not. See chapter 7 of the Centaur Workbook.
-    </description><simpleType><uint8_t/></simpleType><persistency>non-volatile</persistency><readable/><hwpfToHbAttrMap><id>ATTR_MSS_MRW_CLEANER_ENABLE</id><macro>DIRECT</macro></hwpfToHbAttrMap></attribute><attribute><id>SECURITY_MODE</id><description>
-        If SBE image has ATTR_SECURITY_MODE == 0b1, then leave SAB bit as is,
-        else ATTR_SECURITY_MODE == 0b0, then clear SAB bit
-    </description><simpleType><uint8_t/></simpleType><persistency>non-volatile</persistency><writeable/><readable/><hwpfToHbAttrMap><id>ATTR_SECURITY_MODE</id><macro>DIRECT</macro></hwpfToHbAttrMap></attribute><!--SBE ONLY--><!--SBE ONLY--><!--SBE ONLY--><attribute><id>SUPPORTS_DYNAMIC_MEM_VOLT</id><description>
+    </description><simpleType><uint8_t/></simpleType><persistency>non-volatile</persistency><readable/><hwpfToHbAttrMap><id>ATTR_MSS_MRW_CLEANER_ENABLE</id><macro>DIRECT</macro></hwpfToHbAttrMap></attribute><!--SBE ONLY--><!--SBE ONLY--><!--SBE ONLY--><attribute><id>SUPPORTS_DYNAMIC_MEM_VOLT</id><description>
         Do we support dynamically updating memory voltages?
         0 = no, 1 = yes
     </description><simpleType><uint8_t><default>0</default></uint8_t></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>LPC_BASE_ADDR</id><description>
@@ -2545,207 +2547,27 @@ Selects which voltage level to place the Core and ECO domain PFETs upon Winkle e
             type to the HDAT.  This is for I2C devices only.
     </description><enumerator><name>955X</name><value>1</value></enumerator><enumerator><name>SEEPROM</name><value>2</value></enumerator><enumerator><name>NUVOTON_TPM</name><value>3</value></enumerator><enumerator><name>MEX_FPGA</name><value>4</value></enumerator><enumerator><name>UCX90XX</name><value>5</value></enumerator><enumerator><name>NVLINK</name><value>6</value></enumerator><enumerator><name>UNKNOWN</name><value>FF</value></enumerator></enumerationType><enumerationType><id>HDAT_I2C_DEVICE_PURPOSE</id><description>Pulled from the MRW, this describes the device
             purpose to the HDAT.  This is for I2C devices only.
-    </description><enumerator><name>CABLE_CARD_PRES</name><value>1</value></enumerator><enumerator><name>CABLE_CARD_POWER_SENSE</name><value>2</value></enumerator><enumerator><name>CABLE_CARD_POWER_CONTROL</name><value>3</value></enumerator><enumerator><name>TPM</name><value>4</value></enumerator><enumerator><name>MODULE_VPD</name><value>5</value></enumerator><enumerator><name>DIMM_SPD</name><value>6</value></enumerator><enumerator><name>PROC_MODULE_VPD</name><value>7</value></enumerator><enumerator><name>SBE_SEEPROM</name><value>8</value></enumerator><enumerator><name>PLANAR_VPD</name><value>9</value></enumerator><enumerator><name>PCI_HOTPLUG</name><value>A</value></enumerator><enumerator><name>NVLINK</name><value>B</value></enumerator><enumerator><name>UNKNOWN</name><value>FF</value></enumerator></enumerationType><enumerationType><id>ENTITY_ID</id><description>Enumeration indicating the IPMI entity ID, these values are
-        defined in the IPMI specification.  These values will be used in place
-        of target type when events are sent to the BMC.</description><enumerator><name>NA</name><value>0</value></enumerator><enumerator><name>OTHER</name><value>0x01</value></enumerator><enumerator><name>PROCESSOR</name><value>0x03</value></enumerator><enumerator><name>SYSTEM_BOARD</name><value>0x07</value></enumerator><enumerator><name>POWER_MGMT</name><value>0x15</value></enumerator><enumerator><name>CHASSIS</name><value>0x17</value></enumerator><enumerator><name>MEMORY_DEVICE</name><value>0x20</value></enumerator><enumerator><name>BIOS</name><value>0x22</value></enumerator><enumerator><name>OS</name><value>0x23</value></enumerator><enumerator><name>CORE</name><value>0xD0</value></enumerator><enumerator><name>MEMBUF</name><value>0xD1</value></enumerator><enumerator><name>OCC</name><value>0xD2</value></enumerator><enumerator><name>REF_CLOCK</name><value>0xD4</value></enumerator><enumerator><name>PCI_CLOCK</name><value>0xD5</value></enumerator><enumerator><name>TOD_CLOCK</name><value>0xD6</value></enumerator><enumerator><name>APSS</name><value>0xD7</value></enumerator></enumerationType><enumerationType><id>SENSOR_NAME</id><description>Enumeration indicating the IPMI sensor name, which will
+    </description><enumerator><name>CABLE_CARD_PRES</name><value>1</value></enumerator><enumerator><name>CABLE_CARD_POWER_SENSE</name><value>2</value></enumerator><enumerator><name>CABLE_CARD_POWER_CONTROL</name><value>3</value></enumerator><enumerator><name>TPM</name><value>4</value></enumerator><enumerator><name>MODULE_VPD</name><value>5</value></enumerator><enumerator><name>DIMM_SPD</name><value>6</value></enumerator><enumerator><name>PROC_MODULE_VPD</name><value>7</value></enumerator><enumerator><name>SBE_SEEPROM</name><value>8</value></enumerator><enumerator><name>PLANAR_VPD</name><value>9</value></enumerator><enumerator><name>PCI_HOTPLUG</name><value>A</value></enumerator><enumerator><name>NVLINK</name><value>B</value></enumerator><enumerator><name>UNKNOWN</name><value>FF</value></enumerator></enumerationType><enumerationType><id>IPMI_SENSOR_ARRAY</id><description>Enumeration defining the offsets into the
+        IPMI_SENSORS array.</description><enumerator><name>NAME_OFFSET</name><value>0x00</value></enumerator><enumerator><name>NUMBER_OFFSET</name><value>0x01</value></enumerator></enumerationType><enumerationType><id>SENSOR_NAME</id><description>Enumeration indicating the IPMI sensor name, which will
         be used by hostboot when determining the sensor number to return.
         he sensor name consists of one byte of sensor type plus one byte of
         sub-type, to differentiate similar sensors under the same target.
         Our implementaion uses the IPMI defined entity ID as the sub-type.
-    </description><enumerator><name>PROC_TEMP</name><value>0x0103</value></enumerator><enumerator><name>DIMM_TEMP</name><value>0x0120</value></enumerator><enumerator><name>CORE_TEMP</name><value>0x01D0</value></enumerator><enumerator><name>STATE</name><value>0x0500</value></enumerator><enumerator><name>MEMBUF_TEMP</name><value>0x01D1</value></enumerator><enumerator><name>PROC_STATE</name><value>0x0703</value></enumerator><enumerator><name>CORE_STATE</name><value>0x07D0</value></enumerator><enumerator><name>DIMM_STATE</name><value>0x0C20</value></enumerator><enumerator><name>MEMBUF_STATE</name><value>0x0CD1</value></enumerator><enumerator><name>FW_BOOT_PROGRESS</name><value>0x0F22</value></enumerator><enumerator><name>SYSTEM_EVENT</name><value>0x1201</value></enumerator><enumerator><name>OS_BOOT</name><value>0x1F23</value></enumerator><enumerator><name>HOST_STATUS</name><value>0x2223</value></enumerator><enumerator><name>OCC_ACTIVE</name><value>0x07D2</value></enumerator><enumerator><name>CORE_FREQ</name><value>0xC1D0</value></enumerator><enumerator><name>APSS_CHANNEL</name><value>0xC2D7</value></enumerator><enumerator><name>PCI_ACTIVE</name><value>0xC423</value></enumerator><enumerator><name>REBOOT_COUNT</name><value>0xC322</value></enumerator><enumerator><name>FAULT</name><value>0xC700</value></enumerator><enumerator><name>BACKPLANE_FAULT</name><value>0xC707</value></enumerator><enumerator><name>REF_CLOCK_FAULT</name><value>0xC7D4</value></enumerator><enumerator><name>PCI_CLOCK_FAULT</name><value>0xC7D5</value></enumerator><enumerator><name>TOD_CLOCK_FAULT</name><value>0xC7D6</value></enumerator><enumerator><name>APSS_FAULT</name><value>0xC7D7</value></enumerator><enumerator><name>DERATING_FACTOR</name><value>0xC815</value></enumerator><enumerator><name>REDUNDANT_PS_POLICY</name><value>0xCA22</value></enumerator><enumerator><name>TPM_REQUIRED</name><value>0xFFFF</value></enumerator></enumerationType><enumerationType><id>SENSOR_TYPE</id><description>Enumeration indicating the IPMI sensor type, these values
+    </description><enumerator><name>PROC_TEMP</name><value>0x0103</value></enumerator><enumerator><name>DIMM_TEMP</name><value>0x0120</value></enumerator><enumerator><name>CORE_TEMP</name><value>0x01D0</value></enumerator><enumerator><name>STATE</name><value>0x0500</value></enumerator><enumerator><name>MEMBUF_TEMP</name><value>0x01D1</value></enumerator><enumerator><name>PROC_STATE</name><value>0x0703</value></enumerator><enumerator><name>CORE_STATE</name><value>0x07D0</value></enumerator><enumerator><name>DIMM_STATE</name><value>0x0C20</value></enumerator><enumerator><name>MEMBUF_STATE</name><value>0x0CD1</value></enumerator><enumerator><name>FW_BOOT_PROGRESS</name><value>0x0F22</value></enumerator><enumerator><name>SYSTEM_EVENT</name><value>0x1201</value></enumerator><enumerator><name>OS_BOOT</name><value>0x1F23</value></enumerator><enumerator><name>HOST_STATUS</name><value>0x2223</value></enumerator><enumerator><name>OCC_ACTIVE</name><value>0x07D2</value></enumerator><enumerator><name>CORE_FREQ</name><value>0xC1D0</value></enumerator><enumerator><name>APSS_CHANNEL</name><value>0xC2D7</value></enumerator><enumerator><name>PCI_ACTIVE</name><value>0xC423</value></enumerator><enumerator><name>REBOOT_COUNT</name><value>0xC322</value></enumerator><enumerator><name>FAULT</name><value>0xC700</value></enumerator><enumerator><name>BACKPLANE_FAULT</name><value>0xC707</value></enumerator><enumerator><name>REF_CLOCK_FAULT</name><value>0xC7D4</value></enumerator><enumerator><name>PCI_CLOCK_FAULT</name><value>0xC7D5</value></enumerator><enumerator><name>TOD_CLOCK_FAULT</name><value>0xC7D6</value></enumerator><enumerator><name>APSS_FAULT</name><value>0xC7D7</value></enumerator><enumerator><name>DERATING_FACTOR</name><value>0xC815</value></enumerator><enumerator><name>REDUNDANT_PS_POLICY</name><value>0xCA22</value></enumerator><enumerator><name>TPM_REQUIRED</name><value>0xFFFF</value></enumerator></enumerationType><enumerationType><id>ENTITY_ID</id><description>Enumeration indicating the IPMI entity ID, these values are
+        defined in the IPMI specification.  These values will be used in place
+        of target type when events are sent to the BMC.</description><enumerator><name>NA</name><value>0</value></enumerator><enumerator><name>OTHER</name><value>0x01</value></enumerator><enumerator><name>PROCESSOR</name><value>0x03</value></enumerator><enumerator><name>SYSTEM_BOARD</name><value>0x07</value></enumerator><enumerator><name>POWER_MGMT</name><value>0x15</value></enumerator><enumerator><name>CHASSIS</name><value>0x17</value></enumerator><enumerator><name>MEMORY_DEVICE</name><value>0x20</value></enumerator><enumerator><name>BIOS</name><value>0x22</value></enumerator><enumerator><name>OS</name><value>0x23</value></enumerator><enumerator><name>CORE</name><value>0xD0</value></enumerator><enumerator><name>MEMBUF</name><value>0xD1</value></enumerator><enumerator><name>OCC</name><value>0xD2</value></enumerator><enumerator><name>REF_CLOCK</name><value>0xD4</value></enumerator><enumerator><name>PCI_CLOCK</name><value>0xD5</value></enumerator><enumerator><name>TOD_CLOCK</name><value>0xD6</value></enumerator><enumerator><name>APSS</name><value>0xD7</value></enumerator></enumerationType><enumerationType><id>SENSOR_TYPE</id><description>Enumeration indicating the IPMI sensor type, these values
         are defined in the IPMI specification. These values will be used when
-    sending sensor reading events to the BMC.</description><enumerator><name>NA</name><value>0</value></enumerator><enumerator><name>TEMPERATURE</name><value>0x01</value></enumerator><enumerator><name>PROCESSOR</name><value>0x07</value></enumerator><enumerator><name>MEMORY</name><value>0x0c</value></enumerator><enumerator><name>SYS_FW_PROGRESS</name><value>0x0F</value></enumerator><enumerator><name>SYS_EVENT</name><value>0x12</value></enumerator><enumerator><name>OS_BOOT</name><value>0x1F</value></enumerator><enumerator><name>APCI_POWER_STATE</name><value>0x22</value></enumerator><enumerator><name>FREQ</name><value>0xC1</value></enumerator><enumerator><name>POWER</name><value>0xC2</value></enumerator><enumerator><name>BOOT_COUNT</name><value>0xC3</value></enumerator><enumerator><name>PCI_LINK_PRES</name><value>0xC4</value></enumerator><enumerator><name>PWR_LIMIT_ACTIVE</name><value>0xC4</value></enumerator><enumerator><name>FAULT</name><value>0xC7</value></enumerator></enumerationType><enumerationType><id>IPMI_SENSOR_ARRAY</id><description>Enumeration defining the offsets into the
-        IPMI_SENSORS array.</description><enumerator><name>NAME_OFFSET</name><value>0x00</value></enumerator><enumerator><name>NUMBER_OFFSET</name><value>0x01</value></enumerator></enumerationType><attribute><id>GPIO_INFO</id><description>Information needed to address GPIO device</description><complexType><description>Structure to define the addessing for an I2C
+    sending sensor reading events to the BMC.</description><enumerator><name>NA</name><value>0</value></enumerator><enumerator><name>TEMPERATURE</name><value>0x01</value></enumerator><enumerator><name>PROCESSOR</name><value>0x07</value></enumerator><enumerator><name>MEMORY</name><value>0x0c</value></enumerator><enumerator><name>SYS_FW_PROGRESS</name><value>0x0F</value></enumerator><enumerator><name>SYS_EVENT</name><value>0x12</value></enumerator><enumerator><name>OS_BOOT</name><value>0x1F</value></enumerator><enumerator><name>APCI_POWER_STATE</name><value>0x22</value></enumerator><enumerator><name>FREQ</name><value>0xC1</value></enumerator><enumerator><name>POWER</name><value>0xC2</value></enumerator><enumerator><name>BOOT_COUNT</name><value>0xC3</value></enumerator><enumerator><name>PCI_LINK_PRES</name><value>0xC4</value></enumerator><enumerator><name>PWR_LIMIT_ACTIVE</name><value>0xC4</value></enumerator><enumerator><name>FAULT</name><value>0xC7</value></enumerator></enumerationType><attribute><id>ADC_CHANNEL_FUNC_IDS</id><description>ADC Channel function id. 16 channels.</description><simpleType><uint8_t/><array>16</array></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>ADC_CHANNEL_SENSOR_NUMBERS</id><description>ADC Channel IPMI sensor numbers. 16 channels.</description><simpleType><uint32_t/><array>16</array></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>ADC_CHANNEL_GNDS</id><description>ADC Channel ground. 16 channels.</description><simpleType><uint8_t/><array>16</array></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>ADC_CHANNEL_GAINS</id><description>ADC channel gain * 1000. 16 channels.</description><simpleType><uint32_t/><array>16</array></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>ADC_CHANNEL_OFFSETS</id><description>ADC channel offset * 1000. 16 channels</description><simpleType><uint32_t/><array>16</array></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>APSS_GPIO_PORT_MODES</id><description>APSS GPIO PORT MODES</description><simpleType><uint8_t/><array>2</array></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>APSS_GPIO_PORT_PINS</id><description>APSS GPIO PORT PINS
+        Port0 pin 0-7
+        Port1 pin 8-15
+    </description><simpleType><uint8_t/><array>16</array></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>GPIO_INFO</id><description>Information needed to address GPIO device</description><complexType><description>Structure to define the addessing for an I2C
                      slave device.</description><field><name>i2cMasterPath</name><description>Entity path to the chip that contains the I2C
                          master</description><type>EntityPath</type><default>physical:sys-0</default></field><field><name>port</name><description>Port from the I2C Master device. This is a 6-bit
                          value.</description><type>uint8_t</type><default>0</default></field><field><name>devAddr</name><description>Device address on the I2C bus. This is a 7-bit value,
                          but then shifted 1 bit left.</description><type>uint8_t</type><default>0</default></field><field><name>engine</name><description>I2C master engine. This is a 2-bit
                          value.</description><type>uint8_t</type><default>0</default></field><field><name>vddrPin</name><description>
                 Logical GPIO pin number used to enabled/disable VDDR
-            </description><type>uint8_t</type><default>0</default></field></complexType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>OPEN_POWER_DIMM_THROTTLE_TEMP_DEG_C</id><description>
-        DIMM temperature threshold where throttling will
-        occur in degrees C
-    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>OPEN_POWER_DIMM_ERROR_TEMP_DEG_C</id><description>
-        DIMM temperature where an error will be generated
-        in degrees C
-    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>OPEN_POWER_MEMCTRL_THROTTLE_TEMP_DEG_C</id><description>
-         Memory controller temperature threshold
-         where throttling will occur in degrees C
-    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>OPEN_POWER_PROC_WEIGHT</id><description>
-        Weight factor (in 1/10ths) for each core DTS to calculate a core
-        temperature.
-    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>OPEN_POWER_QUAD_WEIGHT</id><description>
-        Weight factor (in 1/10ths) for each quad (cache) DTS to calculate a core
-        temperature.
-    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>OPEN_POWER_PROC_DVFS_TEMP_DEG_C</id><description>
-        Processor temperature where DVFS will occur in degrees C
-    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>OPEN_POWER_MEMCTRL_ERROR_TEMP_DEG_C</id><description>
-        Memory controller temperature where an error will occur
-        in degrees C
-    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>OPEN_POWER_N_BULK_POWER_LIMIT_WATTS</id><description>
-        N mode bulk power supply limit in Watts
-    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>OPEN_POWER_N_MAX_MEM_POWER_WATTS</id><description>
-        Maximum power allocated to DIMMs in Watts
-    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>OPEN_POWER_MEMCTRL_READ_TIMEOUT_SEC</id><description>
-        Memory controller read timeout in seconds
-    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>OPEN_POWER_DIMM_READ_TIMEOUT_SEC</id><description>
-        DIMM read timeout in seconds
-    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>OPEN_POWER_PROC_ERROR_TEMP_DEG_C</id><description>
-        Processor temperature error threshold in degrees C
-    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>OPEN_POWER_MIN_MEM_UTILIZATION_THROTTLING</id><description>
-        Minimum memory utilization for memory throttling
-    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>OPEN_POWER_PROC_READ_TIMEOUT_SEC</id><description>
-        Processor read timeout in seconds
-    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>OPEN_POWER_REGULATOR_EFFICIENCY_FACTOR</id><description>
-        Regulator efficiency factor
-    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>OPEN_POWER_MIN_POWER_CAP_WATTS</id><description>
-        Minimum hard power cap in Watts
-    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>OPEN_POWER_SOFT_MIN_PCAP_WATTS</id><description>
-        Minimum soft power cap in Watts
-    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>OPEN_POWER_N_PLUS_ONE_BULK_POWER_LIMIT_WATTS</id><description>
-        N+1 bulk power limit in Watts for systems running
-        with redundant power supplies (default)
-    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>OPEN_POWER_N_PLUS_ONE_HPC_BULK_POWER_LIMIT_WATTS</id><description>
-        N+1 bulk power limit in Watts for High Performance Computing
-        systems running with a non-redundant power supply policy
-    </description><simpleType><uint64_t><default>0</default></uint64_t></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>OPEN_POWER_N_PLUS_ONE_MAX_MEM_POWER_WATTS</id><description>
-        N+1 max memory power in Watts
-    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>OPEN_POWER_TURBO_MODE_SUPPORTED</id><description>
-        If this system supports Turbo frequency mode.
-            0x00 = no
-            0x01 = yes
-    </description><simpleType><uint8_t/></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>ADC_CHANNEL_FUNC_IDS</id><description>ADC Channel function id. 16 channels.</description><simpleType><uint8_t/><array>16</array></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>ADC_CHANNEL_SENSOR_NUMBERS</id><description>ADC Channel IPMI sensor numbers. 16 channels.</description><simpleType><uint32_t/><array>16</array></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>ADC_CHANNEL_GNDS</id><description>ADC Channel ground. 16 channels.</description><simpleType><uint8_t/><array>16</array></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>ADC_CHANNEL_GAINS</id><description>ADC channel gain * 1000. 16 channels.</description><simpleType><uint32_t/><array>16</array></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>ADC_CHANNEL_OFFSETS</id><description>ADC channel offset * 1000. 16 channels</description><simpleType><uint32_t/><array>16</array></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>APSS_GPIO_PORT_MODES</id><description>APSS GPIO PORT MODES</description><simpleType><uint8_t/><array>2</array></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>APSS_GPIO_PORT_PINS</id><description>APSS GPIO PORT PINS
-        Port0 pin 0-7
-        Port1 pin 8-15
-    </description><simpleType><uint8_t/><array>16</array></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>OPAL_MODEL</id><description>
-        Specifies the compatible model name for Opal to key off of.
-        This is sourced from the MRW and should be of the format
-        'vendor,model', e.g. 'tyan,palmetto'.
-    </description><simpleType><string><default>ibm,miscopenpower</default><sizeInclNull>32</sizeInclNull></string></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>ISDIMM_MBVPD_INDEX</id><description>
-        Multiple centaurs can sometimes have their VPD located in one
-        physical SEEPROM. This is the index into the memory buffer VPD
-        for this centaur.
-    </description><simpleType><uint8_t><default>0</default></uint8_t></simpleType><persistency>non-volatile</persistency><readable/><hwpfToHbAttrMap><id>ATTR_ISDIMM_MBVPD_INDEX</id><macro>DIRECT</macro></hwpfToHbAttrMap></attribute><attribute><id>IPMI_INSTANCE</id><description>Holds the IPMI instance number for this entity.</description><simpleType><uint32_t>
-        </uint32_t></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>IPMI_SENSORS</id><description>Attribute to hold 16 pairs of sensor name, sensor number
-        pairs. A sensor name consists of one byte of general sensor type
-        and one byte of sub-type</description><simpleType><uint16_t/><array>16,2</array></simpleType><persistency>non-volatile</persistency><readable/></attribute><attribute><id>WOF_PROC_SORT</id><description>
-      creator: platform (MRW)
-      Look up table by active cores and nominal frequency to find WOF table
-      index. First column is number of active cores, Second is nominal
-      frequency, and third is the WOF table index (1,2,3,4).
-  </description><simpleType><uint16_t><default>
-        0,0,0,
-        0,0,0,
-        0,0,0,
-        0,0,0,
-      </default></uint16_t><array>4,3</array></simpleType><persistency>non-volatile</persistency><readable/><hwpfToHbAttrMap><id>ATTR_WOF_PROC_SORT</id><macro>DIRECT</macro></hwpfToHbAttrMap></attribute><attribute><id>WOF_FREQUENCY_UPLIFT</id><description>
-      creator: platform (MRW)
-      WOF frequency uplift table. The columns will be the # of active cores.
-      The rows will be the AC reduction %, or the amount of current difference
-      from the TDP current.  The percentage value is encoded into a integer with
-      a fixed floating point of 2.  (35.8% --&gt; 3580).
-  </description><simpleType><uint16_t><default>
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0
-      </default></uint16_t><array>4,22,13</array></simpleType><persistency>non-volatile</persistency><readable/><hwpfToHbAttrMap><id>ATTR_WOF_FREQUENCY_UPLIFT</id><macro>DIRECT</macro></hwpfToHbAttrMap></attribute><attribute><id>WOF_REGULATOR_EFFICIENCIES</id><description>
-      creator: platform (MRW)
-      WOF regulator efficiencies.  The rows are the output voltage setting and
-      the columns are the output current.  The data in the table is percentages
-      converted into two byte integers.
-  </description><simpleType><uint16_t><default>
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0
-      </default></uint16_t><array>3,14</array></simpleType><persistency>non-volatile</persistency><readable/><hwpfToHbAttrMap><id>ATTR_WOF_REGULATOR_EFFICIENCIES</id><macro>DIRECT</macro></hwpfToHbAttrMap></attribute><attribute><id>HDAT_I2C_ENGINE</id><description>
+            </description><type>uint8_t</type><default>0</default></field></complexType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>HDAT_I2C_ENGINE</id><description>
         This attribute holds the values of the I2C Engine from the i2c device
         connections as defined in the MRW.  It is parsed into a struct in i2c.C
     </description><simpleType><uint8_t/><array>32</array></simpleType><persistency>non-volatile</persistency><readable/><writeable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>HDAT_I2C_MASTER_PORT</id><description>
@@ -2775,7 +2597,70 @@ Selects which voltage level to place the Core and ECO domain PFETs upon Winkle e
     </description><simpleType><uint8_t/><array>32</array></simpleType><persistency>non-volatile</persistency><readable/><writeable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>HDAT_I2C_ELEMENTS</id><description>
         This attribute holds the number of elements that were found under this
         particular target, and how many devices are stored in the arrays.
-    </description><simpleType><uint8_t><default>0</default></uint8_t></simpleType><persistency>non-volatile</persistency><readable/><writeable/><serverwizShow>openpower</serverwizShow></attribute><enumerationType><id>CHIP_VER</id><description>Enumeration indicating the chip version</description><enumerator><name>DD10</name><value>0x10</value></enumerator><enumerator><name>DD11</name><value>0x11</value></enumerator><enumerator><name>DD20</name><value>0x20</value></enumerator><enumerator><name>DD21</name><value>0x21</value></enumerator><default>DD10</default></enumerationType><enumerationType><id>HW_VER</id><description>Enumeration indicating the chip HW version</description><enumerator><name>FSP_HW_VER</name><value>0x2</value></enumerator><enumerator><name>BMC_HW_VER</name><value>0x3</value></enumerator><default>BMC_HW_VER</default></enumerationType><enumerationType><id>SW_VER</id><description>Enumeration indicating the SW version</description><enumerator><name>FSP_SW_VER</name><value>0x1</value></enumerator><enumerator><name>BMC_SW_VER</name><value>0x2</value></enumerator><default>BMC_SW_VER</default></enumerationType><enumerationType><id>ROLE</id><description>Enumeration indicating the master's FSI type</description><enumerator><name>PRIMARY</name><value>1</value></enumerator><enumerator><name>BACKUP</name><value>0</value></enumerator><default>PRIMARY</default></enumerationType><attribute><id>PROC_HW_TOPOLOGY</id><description>Hardware topology for HDAT
+    </description><simpleType><uint8_t><default>0</default></uint8_t></simpleType><persistency>non-volatile</persistency><readable/><writeable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>ISDIMM_MBVPD_INDEX</id><description>
+        Multiple centaurs can sometimes have their VPD located in one
+        physical SEEPROM. This is the index into the memory buffer VPD
+        for this centaur.
+    </description><simpleType><uint8_t><default>0</default></uint8_t></simpleType><persistency>non-volatile</persistency><readable/><hwpfToHbAttrMap><id>ATTR_ISDIMM_MBVPD_INDEX</id><macro>DIRECT</macro></hwpfToHbAttrMap><serverwizShow>openpower</serverwizShow></attribute><attribute><id>IPMI_INSTANCE</id><description>Holds the IPMI instance number for this entity.</description><simpleType><uint32_t>
+        </uint32_t></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>IPMI_SENSORS</id><description>Attribute to hold 16 pairs of sensor name, sensor number
+        pairs. A sensor name consists of one byte of general sensor type
+        and one byte of sub-type</description><simpleType><uint16_t/><array>16,2</array></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>OPEN_POWER_DIMM_THROTTLE_TEMP_DEG_C</id><description>
+        DIMM temperature threshold where throttling will
+        occur in degrees C
+    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>OPEN_POWER_DIMM_ERROR_TEMP_DEG_C</id><description>
+        DIMM temperature where an error will be generated
+        in degrees C
+    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>OPEN_POWER_MEMCTRL_THROTTLE_TEMP_DEG_C</id><description>
+         Memory controller temperature threshold
+         where throttling will occur in degrees C
+    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>OPEN_POWER_PROC_WEIGHT</id><description>
+        Weight factor (in 1/10ths) for each core DTS to calculate a core
+        temperature.
+    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>OPEN_POWER_QUAD_WEIGHT</id><description>
+        Weight factor (in 1/10ths) for each quad (cache) DTS to calculate a core
+        temperature.
+    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>OPEN_POWER_PROC_DVFS_TEMP_DEG_C</id><description>
+        Processor temperature where DVFS will occur in degrees C
+    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>OPEN_POWER_MEMCTRL_ERROR_TEMP_DEG_C</id><description>
+        Memory controller temperature where an error will occur
+        in degrees C
+    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>OPEN_POWER_N_BULK_POWER_LIMIT_WATTS</id><description>
+        N mode bulk power supply limit in Watts
+    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>OPEN_POWER_N_MAX_MEM_POWER_WATTS</id><description>
+        Maximum power allocated to DIMMs in Watts
+    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>OPEN_POWER_MEMCTRL_READ_TIMEOUT_SEC</id><description>
+        Memory controller read timeout in seconds
+    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>OPEN_POWER_DIMM_READ_TIMEOUT_SEC</id><description>
+        DIMM read timeout in seconds
+    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>OPEN_POWER_PROC_ERROR_TEMP_DEG_C</id><description>
+        Processor temperature error threshold in degrees C
+    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>OPEN_POWER_MIN_MEM_UTILIZATION_THROTTLING</id><description>
+        Minimum memory utilization for memory throttling
+    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>OPEN_POWER_PROC_READ_TIMEOUT_SEC</id><description>
+        Processor read timeout in seconds
+    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>OPEN_POWER_REGULATOR_EFFICIENCY_FACTOR</id><description>
+        Regulator efficiency factor
+    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>OPEN_POWER_MIN_POWER_CAP_WATTS</id><description>
+        Minimum hard power cap in Watts
+    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>OPEN_POWER_SOFT_MIN_PCAP_WATTS</id><description>
+        Minimum soft power cap in Watts
+    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>OPEN_POWER_N_PLUS_ONE_BULK_POWER_LIMIT_WATTS</id><description>
+        N+1 bulk power limit in Watts for systems running
+        with redundant power supplies (default)
+    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>OPEN_POWER_N_PLUS_ONE_HPC_BULK_POWER_LIMIT_WATTS</id><description>
+        N+1 bulk power limit in Watts for High Performance Computing
+        systems running with a non-redundant power supply policy
+    </description><simpleType><uint64_t><default>0</default></uint64_t></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>OPEN_POWER_N_PLUS_ONE_MAX_MEM_POWER_WATTS</id><description>
+        N+1 max memory power in Watts
+    </description><simpleType><uint64_t/></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>OPEN_POWER_TURBO_MODE_SUPPORTED</id><description>
+        If this system supports Turbo frequency mode.
+            0x00 = no
+            0x01 = yes
+    </description><simpleType><uint8_t/></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><attribute><id>OPAL_MODEL</id><description>
+        Specifies the compatible model name for Opal to key off of.
+        This is sourced from the MRW and should be of the format
+        'vendor,model', e.g. 'tyan,palmetto'.
+    </description><simpleType><string><default>ibm,miscopenpower</default><sizeInclNull>32</sizeInclNull></string></simpleType><persistency>non-volatile</persistency><readable/><serverwizShow>openpower</serverwizShow></attribute><enumerationType><id>CHIP_VER</id><description>Enumeration indicating the chip version</description><enumerator><name>DD10</name><value>0x10</value></enumerator><enumerator><name>DD11</name><value>0x11</value></enumerator><enumerator><name>DD20</name><value>0x20</value></enumerator><enumerator><name>DD21</name><value>0x21</value></enumerator><default>DD10</default></enumerationType><enumerationType><id>HW_VER</id><description>Enumeration indicating the chip HW version</description><enumerator><name>FSP_HW_VER</name><value>0x2</value></enumerator><enumerator><name>BMC_HW_VER</name><value>0x3</value></enumerator><default>BMC_HW_VER</default></enumerationType><enumerationType><id>SW_VER</id><description>Enumeration indicating the SW version</description><enumerator><name>FSP_SW_VER</name><value>0x1</value></enumerator><enumerator><name>BMC_SW_VER</name><value>0x2</value></enumerator><default>BMC_SW_VER</default></enumerationType><enumerationType><id>ROLE</id><description>Enumeration indicating the master's FSI type</description><enumerator><name>PRIMARY</name><value>1</value></enumerator><enumerator><name>BACKUP</name><value>0</value></enumerator><default>PRIMARY</default></enumerationType><attribute><id>PROC_HW_TOPOLOGY</id><description>Hardware topology for HDAT
         creator:MRW
         consumer:HDAT
         firmware notes:
